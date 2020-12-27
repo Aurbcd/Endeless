@@ -44,7 +44,7 @@ Take a look at your dataset before creating playlists.
 
 ## What can Endeless do ?
 
-- Create a mix with a fix number of songs, starting with a song (enter the name of the song) of your choice with seamless transitions
+- Create a mix with a fix number of songs, starting with a song (enter the exact name of the song, use -s to check) of your choice with seamless transitions
   ```
   $ python endeless -m "Thunder"
   ```
