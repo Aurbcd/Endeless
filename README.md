@@ -58,7 +58,7 @@ Take a look at your dataset before creating playlists.
 - #### "What do you mean by 'the time of the last note' ?"
 The time of the last note is actually the beginning of the last note (same for the first note), just like chords in a tablature.
 - #### "I can't find enough songs to make this work."
-I'm really sorry but you need a number of songs that is large enough for the program to find songs that match with each other. Still, I can suggest you my Songs-dataset.csv from the repository which contains a few songs that work well together. 
+I'm really sorry but you need a number of songs that is large enough for the program to find songs that match with each other. Still, I can suggest to you my Songs-dataset.csv from the repository which contains a few songs that work well together. 
 
 ### Warning :
 This is a personal project, please email me at contact.keyofmagic@gmail.com if you have any problem with Endeless.
