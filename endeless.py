@@ -57,6 +57,7 @@ if __name__ == '__main__':
         endeless_worker.create_playlist(the.playlist[0], the.playlist[1], df_song, number_of_songs=the.number_of_songs)
 
     if the.reset_dataset:
+        print("-Resetting the dataset-")
         dataset_update.reset_dataset(the.dataset_path)
 
     if the.show_dataset:
