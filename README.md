@@ -22,9 +22,11 @@ You will need a few packages :
 ##How to make it work
 You have to fill the songs folder with audio files (mp3 for now) of your songs. You must fill the metadata "name" and "artist" in the songs' properties for it to work well. I encourage you to select an important number of songs.
 <br> Now that our songs are prepared, we can run :
+
   ```
   $ python endeless -r
   ```
+
 This will reset the dataset that contains my examples. Now you can update your dataset :
 
   ```
@@ -36,6 +38,7 @@ You will be asked to submit the time in ms of the first note and last note of ea
   ```
   $ python endeless -s
   ```
+
 Take a look at your dataset before creating playlists.
 
 ## What can Endeless do ?
