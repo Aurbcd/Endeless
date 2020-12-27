@@ -1,8 +1,5 @@
 import random
 from pydub import AudioSegment
-import pandas as pd
-import numpy as np
-
 
 class NoMoreSongToFitIn(Exception):
     """Exception raised when there is no more song to fit in the playlist."""
@@ -11,9 +8,11 @@ class NoMoreSongToFitIn(Exception):
 
 def random_search_next_song(playlist, df, song=None):
     """
-    string song : initial song OR int song : index of the song
+    playlist : list of the indexes of songs in the audio
 
     df : dataframe of all the songs
+
+    returns the index of the next song randomly chosen in well fitting dong of the dataset
     """
     if song == None:
         index = playlist[-1]
@@ -32,13 +31,15 @@ def random_search_next_song(playlist, df, song=None):
 
 def add_with_transition(endless, song_in, playlist, df):
     """
-    endless : list of songs
-
-    string song_out : song ending OR int song : index of the song ending
+    endless : audio
 
     string song_in : song beginning OR int song_in : index of the song beginning
 
+    playlist : list of the indexes of songs in endless
+
     df : dataframe of all the songs
+
+    returns the endless (audio) where the song_in has been added
     """
     if isinstance(song_in, str):
         index_in = df[df['Song'] == song_in].index[0]
@@ -49,7 +50,7 @@ def add_with_transition(endless, song_in, playlist, df):
     mp3_in = AudioSegment.from_mp3(df["File_Name"][index_in])
 
 
-    # crossfade
+    # crossfade | Use max and min in order to garanty a 5 seconds fade maximum
     endless = endless.fade(from_gain=0, to_gain=-120, start=len(endless) - df["Duration"][index_out] + df["Last_Note_Time"][index_out], end=min(len(endless), len(endless) - df["Duration"][index_out] + df["Last_Note_Time"][index_out] + 5000))
     mp3_in = mp3_in.fade(from_gain=-120, to_gain=0, start=max(0, df["First_Note_Time"][index_in] - 5000),end=df["First_Note_Time"][index_in])
     position_start_song_in = len(endless) - df["First_Note_Time"][index_in] - (df["Duration"][index_out] - df["Last_Note_Time"][index_out])
@@ -63,11 +64,13 @@ def add_with_transition(endless, song_in, playlist, df):
 
 def begin_with(song, playlist, df):
     """
-    endless : list of songs
+    string song : song to begin with OR int song_in : index of the song to begin with
 
-    string song_in : song to begin with OR int song_in : index of the song to begin with
+    playlist : list of the indexes of songs in the audio
 
     df : dataframe of all the songs
+
+    returns the audio, which is the song
     """
     if isinstance(song, str):
         index = df[df['Song'] == song].index[0]
@@ -79,9 +82,15 @@ def begin_with(song, playlist, df):
 
 def specific_search_fill_song(playlist, df, song_start=None,song_end=None):
     """
-    string song : initial song OR int song : index of the song
+    playlist : list of the indexes of songs in the audio
 
     df : dataframe of all the songs
+
+    string song_start OR int song_start : index of the song
+
+    string song_end OR int song_end : index of the song
+
+    returns the index of a random song that fits between song_start and song_end
     """
     if song_start == None:
         index_start = playlist[-2]
@@ -107,6 +116,21 @@ def specific_search_fill_song(playlist, df, song_start=None,song_end=None):
     return index_next_song
 
 def create_playlist(song_to_start, song_to_end, df, number_of_songs, export_file=True, show_playlist=True):
+    """
+    string song_start : song to start the playlist with OR int song_start : index of the song to start the playlist with
+
+    string song_to_end : song to end the playlist with OR int song_to_end : index of the song to end the playlist with
+
+    df : dataframe of all the songs
+
+    number_of_songs : Number of songs in the playlist
+
+    export_file : explicit bool
+
+    show_playlist : if you want some suspense when you listen, make it false
+
+    returns the audio of number_of_songs songs starting with song_start and ending with song_to_end ; and the playlist which is list of the indexes of songs in the audio
+    """
     if isinstance(song_to_start, str):
         index_start = df[df['Song'] == song_to_start].index[0]
     else:
@@ -146,6 +170,20 @@ def create_playlist(song_to_start, song_to_end, df, number_of_songs, export_file
         return endless, playlist
 
 def create_endeless_mix(song_to_start,number_of_songs, df, export_file=True, show_mix=True):
+    """
+    string song_start : song to start the playlist with OR int song_start : index of the song to start the playlist with
+
+    number_of_songs : Number of songs in the playlist
+
+    df : dataframe of all the songs
+
+    export_file : explicit bool
+
+    show_mix : if you want some suspense when you listen, make it false
+
+    returns the audio of number_of_songs songs starting with song_start and the playlist which is list of the indexes of songs in the audio
+    """
+
     if isinstance(song_to_start, str):
         index = df[df['Song'] == song_to_start].index[0]
     else:

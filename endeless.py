@@ -1,4 +1,4 @@
-from endeless import dataset_update, endeless_worker
+import dataset_update, endeless_worker
 import pandas as pd
 
 desired_width = 320
@@ -42,6 +42,7 @@ if __name__ == '__main__':
     if the.update_dataset:
         print("-Updating dataset-")
         dataset_update.update_dataset(the.dataset_path, "songs/")
+        print("-Updating Done-")
 
     df_song = pd.read_csv(the.dataset_path)
 

@@ -1,5 +1,5 @@
 import pandas as pd
-from endeless.chord_recognition import *
+from chord_recognition import *
 from mutagen.easyid3 import EasyID3
 import glob
 import librosa
@@ -8,6 +8,13 @@ import libfmp.c5
 chord_labels = libfmp.c5.get_chord_labels()
 
 def update_dataset(df_path, path_directory, web_verification=True):
+    """
+    df_path: path of the dataframe containing all the songs data
+    path_directory: path of the directory where all the audio files are
+    web_verification: boolean to turn on web_verification
+
+    returns the dataset updated
+    """
     df_song = pd.read_csv(df_path)
     songs_mp3 = glob.glob(path_directory + "*.mp3")
     songs_wav = glob.glob(path_directory + "*.wav")
@@ -46,8 +53,7 @@ def update_dataset(df_path, path_directory, web_verification=True):
                             if web_scrapping_verification(title, artist) is not None:
                                 chords, last_chord = web_scrapping_verification(title, artist)
                                 if First_Note not in chords:
-                                    First_Note, _ = input(
-                                        f"According to the web, the chords of {title} by {artist} are {chords}, however chord recognition found {First_Note}. Choose a closest chord from the chord recognition according to this list :\n")
+                                    First_Note = input(f"According to the web, the chords of {title} by {artist} are {chords}, however chord recognition found {First_Note}. Choose a closest chord from the chord recognition according to this list :\n")
                             else:
                                 print('Web verification : Page not found | Check the mp3 metadata.')
                     if First_Note not in chord_labels:
@@ -70,6 +76,13 @@ def update_dataset(df_path, path_directory, web_verification=True):
     df_song.to_csv(df_path, index=False)
 
 def add_to_dataset(df_path,file,web_verification=True):
+    """
+    df_path: path of the dataframe containing all the songs data
+    file: path of the audio file to add to the dataset
+    web_verification: boolean to turn on web_verification
+
+    returns the dataset updated
+    """
     df_song = pd.read_csv(df_path)
     if file not in df_song['File_Name'].to_numpy():
         audio = EasyID3(file)
@@ -128,5 +141,10 @@ def add_to_dataset(df_path,file,web_verification=True):
     df_song.to_csv(df_path, index=False)
 
 def reset_dataset(df_path):
+    """
+    df_path: path of the dataframe containing all the songs data
+
+    returns the dataset reinitialized
+    """
     dataset = pd.DataFrame(columns=['Song','Artist','Duration','First_Note','First_Note_Time','Last_Note','Last_Note_Time','File_Name'])
     dataset.to_csv(df_path, index=False)

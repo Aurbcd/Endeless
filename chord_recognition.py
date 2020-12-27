@@ -10,29 +10,30 @@ import re
 
 def compute_chromagram_from_filename(fn_wav, Fs=22050, N=4096, H=2048,seperation=None, gamma=None, version='STFT', norm='2'):
     """Compute chromagram for WAV file specified by filename
-    Args:
-        fn_wav: Filenname of WAV
-        Fs: Sampling rate
-        N: Window size
-        H: Hop size
-        gamma: Constant for logarithmic compression
-        version: Technique used for front-end decomposition ('STFT', 'IIS', 'CQT')
-        norm: If not 'None', chroma vectors are normalized by norm as specified ('1', '2', 'max')
+    Args :
+        fn_wav : Filenname of WAV
+        Fs : Sampling rate
+        N : Window size
+        H : Hop size
+        seperation : represents a way for me to only analyse the first half (set it to 2) or second half of the song (set it to -2)
+        gamma : Constant for logarithmic compression
+        version : Technique used for front-end decomposition ('STFT', 'IIS', 'CQT')
+        norm : If not 'None', chroma vectors are normalized by norm as specified ('1', '2', 'max')
 
     Returns:
-        X: Chromagram
-        Fs_X: Feature reate of chromagram
-        x: Audio signal
-        Fs: Sampling rate of audio signal
-        x_dur: Duration (seconds) of audio signal
+        X : Chromagram
+        Fs_X : Feature reate of chromagram
+        x : Audio signal
+        Fs : Sampling rate of audio signal
+        x_dur : Duration (seconds) of audio signal
     """
     x, Fs = librosa.load(fn_wav, sr=Fs)
     if seperation == None:
         x=x
     elif seperation > 0:
-        x = x[:int(x.shape[1]/seperation)]
+        x = x[:int(x.shape[0]/seperation)]
     elif seperation < 0:
-        x = x[int(x.shape[1]/seperation):]
+        x = x[int(x.shape[0]/(-seperation)):]
     x_dur = x.shape[0] / Fs
     if version == 'STFT':
         # Compute chroma features with STFT
@@ -58,20 +59,32 @@ def compute_chromagram_from_filename(fn_wav, Fs=22050, N=4096, H=2048,seperation
     return X, Fs_X, x, Fs, x_dur
 
 def optimize(chord_max):
+    """
+    chord_max : matrix containing a 1 for each chord it thinks is the most probable
+    returns the same matrix but links outliers to the next chord to make more relevant data
+    """
     matrix = chord_max.T.copy()
     for i in range(1,matrix.shape[0]-1):
         if (np.argmax(matrix[i]) != np.argmax(matrix[i-1])) & (np.argmax(matrix[i]) != np.argmax(matrix[i+1])):
             matrix[i] = matrix[i+1]
     return matrix.T
 
-def chord_recognition(filepath, time, seperation=None, N=4096, H = 2048):
+def chord_recognition(filepath, time, separation=None, N=4096, H = 2048):
+    """
+    filepath : path of the file to analyse
+    time: when to do the chord recognition (in milliseconds)
+    seperation : represents a way for me to only analyse the first half (set it to 2) or second half of the song (set it to -2)
+    N : Window size
+    H : Hop size
+    returns the same matrix but links outliers to the next chord to make more relevant data
+    """
     fn_wav = os.path.join(filepath)
     list_X=[]
-    X, Fs_X, x, Fs, x_dur = compute_chromagram_from_filename(fn_wav, N=N, H=H, seperation=None, version='CQT')
+    X, Fs_X, x, Fs, x_dur = compute_chromagram_from_filename(fn_wav, N=N, H=H, seperation=separation, version='CQT')
     list_X.append(X)
-    X, Fs_X, x, Fs, x_dur = compute_chromagram_from_filename(fn_wav, N=N, H=H, gamma=0.1, seperation=None, version='STFT')
+    X, Fs_X, x, Fs, x_dur = compute_chromagram_from_filename(fn_wav, N=N, H=H, gamma=0.1, seperation=separation, version='STFT')
     list_X.append(X)
-    X, Fs_X, x, Fs, x_dur = compute_chromagram_from_filename(fn_wav, N=N, H=H, gamma=100, seperation=None, version='IIR')
+    X, Fs_X, x, Fs, x_dur = compute_chromagram_from_filename(fn_wav, N=N, H=H, gamma=100, seperation=separation, version='IIR')
     list_X.append(X)
 
     weights=[0.9,1,1.1]
@@ -88,6 +101,11 @@ def chord_recognition(filepath, time, seperation=None, N=4096, H = 2048):
     return chord_labels[(np.argmax(chromagram.T[int(time*Fs_X)]))]
 
 def web_scrapping_verification(song, artist):
+    """
+    string song : Name of the song
+    string artist : name of the artist
+    returns : the list of chords in the song according to the web
+    """
     req = requests.get("https://www.ultimate-guitar.com/search.php?title=" + artist +"+"+ song + "&type=300")
     html = BeautifulSoup(req.text,"html.parser")
 
@@ -117,13 +135,10 @@ def web_scrapping_verification(song, artist):
         match = list(re.finditer('/ch]', tab))[i]
         chord = tab[match.start() - 2]
         if chord == 'm':
-            chord = tab[match.start() - 3] + tab[match.start()-2]
+            chord = tab[match.start() - 3] + tab[match.start() - 2]
         if (chord in chord_labels) & (chord not in list_chords):
             list_chords.append(chord)
         if (chord in chord_labels) & (i == number_of_chords - 1):
             most_likely_last_chord = chord
 
     return list_chords, most_likely_last_chord
-
-
-web_scrapping_verification("The Pheonix", "Fall Out Boy")
