@@ -9,14 +9,14 @@ What Endeless can do :
 
 ## Installation
 You will need a few packages :
-- `pydub` to handle audio files and crossfades.[(link)](https://github.com/jiaaro/pydub)
+- `pydub` to handle audio files and crossfades [(link)](https://github.com/jiaaro/pydub).
 - `librosa` for the analyse of audio files [(link)](https://github.com/librosa/librosa).
 - `numpy`, `json`, `glob`, and `pandas`.
 - `libfmp` for the Fundamentals of Music Processing [(link)](https://github.com/meinardmueller/libfmp).
 - `requests` for web requests [(link)](https://github.com/psf/requests).
 - `re` for regEx [(link)](https://github.com/psf/requests).
-- `bs4` which allows to use BeautifulSoup for web parsing [(link)](https://github.com/psf/requests).
-- `mutagen` to handle mp3 metadata. [(link)](https://github.com/quodlibet/mutagen)
+- `bs4` which allows to use BeautifulSoup for web parsing.
+- `mutagen` to handle mp3 metadata [(link)](https://github.com/quodlibet/mutagen).
 <br>
  Thanks to all the creators of these libraries.
  
