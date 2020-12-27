@@ -19,6 +19,7 @@ You will need a few packages :
 - `mutagen` to handle mp3 metadata. [(link)](https://github.com/quodlibet/mutagen)
 <br>
  Thanks to all the creators of these libraries.
+ 
 ##How to make it work
 You have to fill the songs folder with audio files (mp3 for now) of your songs. You must fill the metadata "name" and "artist" in the songs' properties for it to work well. I encourage you to select an important number of songs.
 <br> Now that our songs are prepared, we can run :
