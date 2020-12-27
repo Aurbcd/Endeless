@@ -17,7 +17,8 @@ You will need a few packages :
 - `re` for regEx [(link)](https://github.com/psf/requests).
 - `requests` for web researches [(link)](https://github.com/psf/requests).
 - `mutagen` to handle mp3 metadata. [(link)](https://github.com/quodlibet/mutagen)
-
+<br>
+ Thanks to all the creators of these libraries.
 ##How to make it work
 You have to fill the songs folder with audio files (mp3 for now) of your songs. You must fill the metadata "name" and "artist" in the songs' properties for it to work well. I encourage you to select an important number of songs.
 <br> Now that our songs are prepared, we can run :
@@ -49,11 +50,11 @@ Take a look at your dataset before creating playlists.
   $ python endeless -p "Thunder" "Animals"
   ```
 
-###Possible problems:
-- ####"What do you mean by 'the time of the last note' ?"
+### Possible problems:
+- #### "What do you mean by 'the time of the last note' ?"
 The time of the last note is actually the beginning the last note (same for the first note), just like chords in a tablature.
-- ####"I can't find enough songs to make this work."
+- #### "I can't find enough songs to make this work."
 I'm really sorry but you need a number of songs that is large enough for the program to find song where notes match. I can propose still you my Songs-dataset.csv from the repository which contains a few songs that work well together. 
 
-###Warning :
+### Warning :
 This is a personal project, please email me at contact.keyofmagic@gmail.com if you have any problem with Endeless.
