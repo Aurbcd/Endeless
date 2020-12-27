@@ -48,8 +48,6 @@ if __name__ == '__main__':
 
     if the.mix is not None:
         print("-Creating a mix-")
-        if the.number_of_songs is None:
-            the.number_of_songs = 3
         endeless_worker.create_endeless_mix(the.mix, the.number_of_songs, df_song)
 
     if the.playlist is not None:
