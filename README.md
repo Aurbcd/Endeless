@@ -1,3 +1,5 @@
+![logo](endeless.png)
+
 # Endeless
 > Making seamless transition in your playlists.
 
