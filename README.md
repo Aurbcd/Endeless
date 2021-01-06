@@ -7,15 +7,21 @@ What Endeless can do :
 1. Create a mix with a fix number of songs, starting with a song of your choice with seamless transitions
 2. Create a playlist starting and ending with songs of your choosing, Endeless will fill the gap between these songs with songs and seamless transitions
 
-## Installation
-You will need a few packages :
+## Install Endeless
+Simply run :
+
+  ```
+  $ pip install Endeless==0.1
+  ```
+
+## Requirements
+You will need a few packages (if you don't use pip install) :
 - `pydub` to handle audio files and crossfades [(link)](https://github.com/jiaaro/pydub).
 - `librosa` for the analyse of audio files [(link)](https://github.com/librosa/librosa).
-- `numpy`, `json`, `glob`, and `pandas`.
+- `numpy`, and `pandas`.
 - `libfmp` for the Fundamentals of Music Processing [(link)](https://github.com/meinardmueller/libfmp).
 - `requests` for web requests [(link)](https://github.com/psf/requests).
-- `re` for regEx [(link)](https://github.com/psf/requests).
-- `bs4` which allows to use BeautifulSoup for web parsing.
+- `beautifulsoup4` which allows to use BeautifulSoup for web parsing.
 - `mutagen` to handle mp3 metadata [(link)](https://github.com/quodlibet/mutagen).
 <br>
  Thanks to all the creators of these libraries.
@@ -25,19 +31,27 @@ You have to fill the songs folder with audio files (mp3 for now) of your songs. 
 <br> Now that our songs are prepared, we can run :
 
   ```
-  $ python endeless -r
+  $ Endeless -r
   ```
 
-This will reset the dataset that contains my examples. Now you can update your dataset :
+This will reset the dataset that contains my examples. Now you can specify the path to your folder with the audio files or put the songs in the dedicated folder in the repository : 
+
 
   ```
-  $ python endeless -d
+  $ Endeless -S
   ```
 
-You will be asked to submit the time in ms of the first note and last note of each songs. Next, you might enter the chords yourself or let chord recognition do the job.
+
+Now you can update your dataset :
 
   ```
-  $ python endeless -s
+  $ Endeless -d
+  ```
+
+You will be asked to submit the time in ms of the first note and last note of each songs. Then, you might enter the chords yourself or let chord recognition do the job.
+
+  ```
+  $ Endeless -s
   ```
 
 Take a look at your dataset before creating playlists.
@@ -45,13 +59,15 @@ Take a look at your dataset before creating playlists.
 ## What can Endeless do ?
 
 - Create a mix with a fix number of songs, starting with a song (enter the exact name of the song, use -s to check) of your choice with seamless transitions
+  
   ```
-  $ python endeless -m "Thunder"
+  $ Endeless -m "Thunder"
   ```
+  
 - Create a playlist starting and ending with songs of your choosing, Endeless will fill the gap between these songs with songs and seamless transitions
 
   ```
-  $ python endeless -p "Thunder" "Animals"
+  $ Endeless -p "Thunder" "Animals"
   ```
 
 ### Possible problems:

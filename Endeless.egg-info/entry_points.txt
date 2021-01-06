@@ -1,0 +1,3 @@
+[console_scripts]
+Endeless = Endeless.__main__:console_entry_point
+

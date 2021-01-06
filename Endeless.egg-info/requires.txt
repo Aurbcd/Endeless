@@ -1,0 +1,8 @@
+pydub
+librosa
+numpy>=1.17.*
+pandas
+libfmp
+requests
+beautifulsoup4
+mutagen

@@ -1,0 +1,15 @@
+README.md
+setup.py
+Endeless/__init__.py
+Endeless/__main__.py
+Endeless.egg-info/PKG-INFO
+Endeless.egg-info/SOURCES.txt
+Endeless.egg-info/dependency_links.txt
+Endeless.egg-info/entry_points.txt
+Endeless.egg-info/requires.txt
+Endeless.egg-info/top_level.txt
+Endeless/dataset/__init__.py
+Endeless/dataset/dataset_update.py
+Endeless/workers/__init__.py
+Endeless/workers/chord_recognition.py
+Endeless/workers/endeless_worker.py
