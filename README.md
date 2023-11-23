@@ -3,8 +3,6 @@
 # [Endeless](http://aurelienchambon.pythonanywhere.com/endeless/en/)
 > Making seamless transition in your playlists.
 
-![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)
-
 What Endeless can do :
 1. Create a mix with a fix number of songs, starting with a song of your choice with seamless transitions
 2. Create a playlist starting and ending with songs of your choosing, Endeless will fill the gap between these songs with songs and seamless transitions
